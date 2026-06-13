@@ -104,6 +104,24 @@ code {
   position: relative;
 }
 
+.header-credits {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  text-align: right;
+  font-size: 0.8rem;
+  color: var(--muted2);
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .header-credits {
+    position: static;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+}
+
 .header-badge {
   display: inline-flex;
   align-items: center;

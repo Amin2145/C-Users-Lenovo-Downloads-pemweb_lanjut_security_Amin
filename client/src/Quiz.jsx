@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const QUESTIONS = [
   {
@@ -89,8 +89,8 @@ export default function Quiz() {
 
   if (finished) {
     const pct = Math.round((score / QUESTIONS.length) * 100);
-    let verdict = '';
-    let cls     = '';
+    let verdict;
+    let cls;
     if (pct === 100)      { verdict = '🏆 Sempurna! Anda ahli keamanan web!'; cls = 'success'; }
     else if (pct >= 60)   { verdict = '👍 Bagus! Anda cukup memahami konsep keamanan web.'; cls = 'info'; }
     else                  { verdict = '📚 Coba lagi! Pelajari lebih lanjut tentang keamanan web.'; cls = 'warning'; }

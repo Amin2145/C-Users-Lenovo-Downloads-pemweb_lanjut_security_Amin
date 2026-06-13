@@ -15,10 +15,10 @@ const PAYLOADS = [
 ];
 
 const INFO_CARDS = [
-  { cls: 'xss',  icon: '⚡', title: 'XSS (Cross-Site Scripting)',      desc: 'Penyerang menyuntikkan skrip berbahaya ke halaman yang dilihat pengguna lain.',           fix: '✅ Solusi: DOMPurify menghapus semua HTML berbahaya sebelum ditampilkan.' },
+  { cls: 'xss', icon: '⚡', title: 'XSS (Cross-Site Scripting)', desc: 'Penyerang menyuntikkan skrip berbahaya ke halaman yang dilihat pengguna lain.', fix: '✅ Solusi: DOMPurify menghapus semua HTML berbahaya sebelum ditampilkan.' },
   { cls: 'csrf', icon: '🎭', title: 'CSRF (Cross-Site Request Forgery)', desc: 'Mengelabui pengguna yang sudah login untuk mengirimkan permintaan yang tidak diinginkan.', fix: '✅ Solusi: Middleware csurf memvalidasi token rahasia di setiap permintaan POST.' },
-  { cls: 'sqli', icon: '💉', title: 'SQL Injection',                     desc: 'Perintah SQL berbahaya disisipkan ke dalam query untuk memanipulasi database.',             fix: '✅ Solusi: Parameterized query (?) memperlakukan input sebagai data, bukan kode.' },
-  { cls: 'cors', icon: '🌐', title: 'Kebijakan CORS',                    desc: 'Browser memblokir permintaan lintas-asal dari domain yang tidak dipercaya.',                fix: '✅ Solusi: Server hanya mengizinkan http://localhost:5173 dengan kredensial.' },
+  { cls: 'sqli', icon: '💉', title: 'SQL Injection', desc: 'Perintah SQL berbahaya disisipkan ke dalam query untuk memanipulasi database.', fix: '✅ Solusi: Parameterized query (?) memperlakukan input sebagai data, bukan kode.' },
+  { cls: 'cors', icon: '🌐', title: 'Kebijakan CORS', desc: 'Browser memblokir permintaan lintas-asal dari domain yang tidak dipercaya.', fix: '✅ Solusi: Server hanya mengizinkan http://localhost:5173 dengan kredensial.' },
 ];
 
 const CODE_SNIPPETS = [
@@ -80,12 +80,12 @@ function ResultCard({ type, children }) {
 
 function SecurityPipeline({ pipeState }) {
   const nodes = [
-    { key: 'input',  icon: '📝', label: 'Input' },
-    { key: 'xss',   icon: '⚡', label: 'DOMPurify' },
-    { key: 'csrf',  icon: '🎭', label: 'CSRF Token' },
-    { key: 'cors',  icon: '🌐', label: 'CORS' },
-    { key: 'sqli',  icon: '💉', label: 'Param Query' },
-    { key: 'db',    icon: '🗄️', label: 'Database' },
+    { key: 'input', icon: '📝', label: 'Input' },
+    { key: 'xss', icon: '⚡', label: 'DOMPurify' },
+    { key: 'csrf', icon: '🎭', label: 'CSRF Token' },
+    { key: 'cors', icon: '🌐', label: 'CORS' },
+    { key: 'sqli', icon: '💉', label: 'Param Query' },
+    { key: 'db', icon: '🗄️', label: 'Database' },
   ];
   return (
     <div className="pipeline">
@@ -108,15 +108,15 @@ const initStats = () => {
 };
 
 export default function App() {
-  const [input, setInput]           = useState('');
-  const [output, setOutput]         = useState(null);
-  const [activeTab, setActiveTab]   = useState('demo');
-  const [csrfReady, setCsrfReady]   = useState(false);
+  const [input, setInput] = useState('');
+  const [output, setOutput] = useState(null);
+  const [activeTab, setActiveTab] = useState('demo');
+  const [csrfReady, setCsrfReady] = useState(false);
   const [vulnerableMode, setVulnerableMode] = useState(false);
-  const [attackLog, setAttackLog]   = useState([]);
-  const [stats, setStats]           = useState(initStats);
-  const [pipeState, setPipeState]   = useState({});
-  const [theme, setTheme]           = useState(() => localStorage.getItem('theme') || 'dark');
+  const [attackLog, setAttackLog] = useState([]);
+  const [stats, setStats] = useState(initStats);
+  const [pipeState, setPipeState] = useState({});
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -162,8 +162,8 @@ export default function App() {
   const handleSubmit = async () => {
     if (!input.trim()) return;
     const sanitized = DOMPurify.sanitize(input);
-    const isXss  = input !== sanitized;
-    const isSqli = /['\";]|drop\s|select\s|insert\s|delete\s|update\s/i.test(input);
+    const isXss = input !== sanitized;
+    const isSqli = /['";]|drop\s|select\s|insert\s|delete\s|update\s/i.test(input);
 
     // Animasi pipeline
     setPipeState({ input: 'active-ok' });
@@ -186,7 +186,7 @@ export default function App() {
         cards.push(
           <ResultCard key="vuln-warn" type="warning">
             <strong>⚠️ Mode Rentan Aktif — {res.data.message}</strong>
-            {res.data.sql && <><br/>Query yang dieksekusi: <code>{res.data.sql}</code></>}
+            {res.data.sql && <><br />Query yang dieksekusi: <code>{res.data.sql}</code></>}
           </ResultCard>
         );
       } else {
@@ -225,8 +225,8 @@ export default function App() {
             <strong>💉 SQL Injection Terdeteksi — Ditangani dengan Aman</strong>
             Karakter <code>'</code> atau perintah <code>DROP/SELECT</code> ditemukan.
             {vulnerableMode
-              ? <><br/><strong style={{color:'var(--red)'}}>⚠️ Mode Rentan: Query langsung dieksekusi tanpa sanitasi SQL!</strong></>
-              : <><br/>Backend menggunakan <strong>parameterized query</strong> — disimpan sebagai teks biasa.</>}
+              ? <><br /><strong style={{ color: 'var(--red)' }}>⚠️ Mode Rentan: Query langsung dieksekusi tanpa sanitasi SQL!</strong></>
+              : <><br />Backend menggunakan <strong>parameterized query</strong> — disimpan sebagai teks biasa.</>}
           </ResultCard>
         );
       }
@@ -332,25 +332,29 @@ export default function App() {
       '  • CORS: Server hanya menerima request dari origin yang diizinkan',
     ];
     const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
-    const url  = URL.createObjectURL(blob);
-    const a    = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
     a.href = url; a.download = `laporan-keamanan-${Date.now()}.txt`; a.click();
     URL.revokeObjectURL(url);
   };
 
   const handleClear = () => { setInput(''); setOutput(null); setPipeState({}); };
-  const handleClearLog = () => { setAttackLog([]); setStats({ xss:0, sqli:0, csrf:0, cors:0, safe:0, total:0 }); localStorage.removeItem('sec_stats'); };
+  const handleClearLog = () => { setAttackLog([]); setStats({ xss: 0, sqli: 0, csrf: 0, cors: 0, safe: 0, total: 0 }); localStorage.removeItem('sec_stats'); };
 
   const tabs = [
-    { key: 'demo',  label: '🛡️ Demo Langsung' },
+    { key: 'demo', label: '🛡️ Demo Langsung' },
     { key: 'about', label: '📖 Cara Kerja' },
-    { key: 'code',  label: '💻 Kode Sumber' },
-    { key: 'quiz',  label: '🧩 Quiz' },
+    { key: 'code', label: '💻 Kode Sumber' },
+    { key: 'quiz', label: '🧩 Quiz' },
   ];
 
   return (
     <div className="app-wrapper">
       <header className="app-header">
+        <div className="header-credits">
+          <div>muhammad amin (2403040016)</div>
+          <div>adillia adhani hadi utami (2403040068)</div>
+        </div>
         <div className="header-badge"><span className="dot" /> Demo Keamanan Web</div>
         <h1 className="app-title">React + Express yang Aman</h1>
         <p className="app-subtitle">Demonstrasi interaktif perlindungan XSS, CSRF, SQL Injection, dan CORS.</p>
@@ -365,12 +369,12 @@ export default function App() {
       {/* Statistik */}
       <div className="stats-bar">
         {[
-          { key:'total', label:'Total Percobaan' },
-          { key:'xss',   label:'XSS Diblokir' },
-          { key:'sqli',  label:'SQLi Diblokir' },
-          { key:'csrf',  label:'CSRF Diblokir' },
-          { key:'cors',  label:'CORS Diblokir' },
-          { key:'safe',  label:'Input Aman' },
+          { key: 'total', label: 'Total Percobaan' },
+          { key: 'xss', label: 'XSS Diblokir' },
+          { key: 'sqli', label: 'SQLi Diblokir' },
+          { key: 'csrf', label: 'CSRF Diblokir' },
+          { key: 'cors', label: 'CORS Diblokir' },
+          { key: 'safe', label: 'Input Aman' },
         ].map(s => (
           <div key={s.key} className={`stat-card ${s.key}`}>
             <div className="stat-num">{stats[s.key] || 0}</div>
@@ -434,9 +438,9 @@ export default function App() {
               </div>
 
               <div className="btn-row">
-                <button className="btn btn-blue"    onClick={handleSubmit}>✅ Kirim dengan Aman</button>
-                <button className="btn btn-red"     onClick={simulateCsrf}>🎭 Simulasi Serangan CSRF</button>
-                <button className="btn btn-cyan"    onClick={simulateCors}>🌐 Uji Kebijakan CORS</button>
+                <button className="btn btn-blue" onClick={handleSubmit}>✅ Kirim dengan Aman</button>
+                <button className="btn btn-red" onClick={simulateCsrf}>🎭 Simulasi Serangan CSRF</button>
+                <button className="btn btn-cyan" onClick={simulateCors}>🌐 Uji Kebijakan CORS</button>
                 <button className="btn btn-outline" onClick={handleClear}>🗑 Bersihkan</button>
               </div>
 
